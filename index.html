@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Latihan 1 - Pengenalan Vue.js</title>
+    <!-- Memanggil library Vue yang sudah disalin ke folder lokal -->
+    <script src="vue.global.prod.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFF8E1;
+            padding: 20px;
+        }
+        
+        .kartu {
+            background: #FFFFFF;
+            border: 2px solid #D32F2F;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 450px;
+        }
+        
+        h2 {
+            color: #B71C1C;
+            border-bottom: 2px solid #FBC02D;
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        
+        input {
+            padding: 8px;
+            border: 1px solid #D32F2F;
+            border-radius: 4px;
+            width: 94%;
+            margin-top: 5px;
+        }
+        
+        .box-edit {
+            background-color: #FFECB3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" class="kartu">
+        <h2>{{ judulAplikasi }}</h2>
+
+        <!-- Menampilkan isi properti Object -->
+        <p><strong>Nama Siswa:</strong> {{ siswa.nama }}</p>
+        <p><strong>Kelas:</strong> {{ siswa.kelas }}</p>
+        <p><strong>Nilai Akhir:</strong> {{ siswa.nilai }}</p>
+
+        <!-- Mengubah data secara langsung (Reaktif) -->
+        <div class="box-edit">
+            <label><strong>Ubah Nama Siswa:</strong></label><br>
+            <input type="text" v-model="siswa.nama" placeholder="Ketik nama baru...">
+        </div>
+    </div>
+
+    <script>
+        const {
+            createApp
+        } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    judulAplikasi: 'Kartu Identitas Siswa RPL',
+                    // Struktur Data Object Sederhana
+                    siswa: {
+                        nama: 'Budi Santoso',
+                        kelas: 'XI RPL 1',
+                        nilai: 88
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+
+</html>

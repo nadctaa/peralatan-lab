@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Latihan 3 - Tambah Data Inventaris</title>
+    <script src="vue.global.prod.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #FFFDF5;
+        }
+        
+        h2 {
+            color: #B71C1C;
+        }
+        
+        .form-box {
+            background-color: #FFECB3;
+            border: 1px solid #FBC02D;
+            padding: 15px;
+            border-radius: 6px;
+            width: 68%;
+        }
+        
+        input {
+            padding: 8px;
+            margin-right: 8px;
+            border: 1px solid #B71C1C;
+            border-radius: 4px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            background-color: #B71C1C;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: #D32F2F;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            margin-top: 15px;
+            background: #FFFFFF;
+        }
+        
+        th,
+        td {
+            border: 1px solid #FBC02D;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #B71C1C;
+            color: #FFFFFF;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #FFF8E1;
+        }
+        
+        .badge-aman {
+            background-color: #FFECB3;
+            color: #1A1A1A;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .badge-habis {
+            background-color: #D32F2F;
+            color: #FFFFFF;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <h2>Inventaris Perangkat Lab RPL</h2>
+
+        <!-- Form Tambah Data Baru -->
+        <div class="form-box">
+            <input type="text" v-model="inputNama" placeholder="Nama perangkat baru...">
+            <input type="number" v-model.number="inputStok" placeholder="Jumlah stok">
+            <button @click="tambahBarang">+ Tambah Data</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Perangkat</th>
+                    <th>Stok</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in inventaris" :key="item.id">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ item.nama }}</td>
+                    <td>{{ item.stok }} unit</td>
+                    <td>
+                        <span v-if="item.stok > 0" class="badge-aman">Tersedia</span>
+                        <span v-else class="badge-habis">Stok Habis</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const {
+            createApp
+        } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    inputNama: '',
+                    inputStok: 0,
+                    inventaris: [{
+                        id: 1,
+                        nama: 'PC Desktop Core i5',
+                        stok: 24
+                    }, {
+                        id: 2,
+                        nama: 'Switch Hub 24 Port',
+                        stok: 2
+                    }, {
+                        id: 3,
+                        nama: 'Kabel LAN Cat6 (Box)',
+                        stok: 0
+                    }, {
+                        id: 4,
+                        nama: 'Tang Crimping',
+                        stok: 10
+                    }]
+                }
+            },
+            methods: {
+                tambahBarang() {
+                    if (this.inputNama.trim() === '') {
+                        alert('Nama perangkat tidak boleh kosong!');
+                        return;
+                    }
+
+                    this.inventaris.push({
+                        id: Date.now(),
+                        nama: this.inputNama,
+                        stok: this.inputStok
+                    });
+
+                    // Mengosongkan kembali form setelah data masuk
+                    this.inputNama = '';
+                    this.inputStok = 0;
+                }
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+
+</html>
